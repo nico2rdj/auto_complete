@@ -6,6 +6,8 @@
 #ifndef DICTIONARY_TRIE_H
 #define DICTIONARY_TRIE_H
 
+#define SIZE 27
+
 #include <vector>
 #include <string>
 
@@ -15,6 +17,18 @@
  *  or a ternary search trie, but you must use one or the other.
  *
  */
+
+class trieNode
+{
+public:
+  trieNode(char symbol, bool flag, unsigned int freq);
+  char symbol;
+  bool flag;
+  trieNode** nextList;
+  unsigned int freq;
+};
+
+
 class DictionaryTrie
 {
 public:
@@ -49,6 +63,8 @@ public:
 
 private:
   // Add your own data members and methods here
+  trieNode** root;
+
 };
 
 #endif // DICTIONARY_TRIE_H

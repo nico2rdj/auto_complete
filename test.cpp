@@ -34,6 +34,8 @@ int main(int argc, char** argv)
   words.push_back("cse");
   words.push_back("crucio");
   words.push_back("autocomplete");
+  words.push_back("auto");
+  
   
   
   cout << "Inserting into Dictionaries..." << endl;
@@ -99,6 +101,43 @@ int main(int argc, char** argv)
 
   
 /*You are supposed to add more test cases in this file */
-  
+
+  wit = words.begin();
+  wen = words.end();
+  for(; wit != wen; ++wit)
+    {
+      cout << "Find: \"" << *wit << "\"... ";
+      t_bst = d_bst.find(*wit);
+      t_ht = d_ht.find(*wit);
+      tt = dt.find(*wit);
+      //cout << t_bst << " " << t_ht << " "<< tt << "... ";
+      if(!t_bst)
+	{
+	  cout << "failed for DictionaryBST... ";
+	}
+      if(!t_ht)
+	{
+	  cout << "failed for DictionaryHashset... ";
+	}
+      if(!tt)
+	{
+	  cout << "failed for DictionaryTrie... ";
+	}
+      if(t_bst && t_ht && tt)
+	{
+	  cout << "PASSED! :D ";
+	}
+      cout << endl;
+    }
+if(dt.find("Jui") == false && d_ht.find("Jui") == false && d_bst.find("Jui") == false  )
+    cout << "Pass" << endl;
+if(dt.find("") == false  && d_ht.find("") == false && d_bst.find("") == false )
+    cout << "Pass" << endl;
+if(dt.find("cs") == false && d_ht.find("cs") == false && d_bst.find("cs") == false )
+    cout << "Pass" << endl;
+
+
+
+    
   return 0;
 }
