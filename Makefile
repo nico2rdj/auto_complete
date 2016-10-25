@@ -18,7 +18,7 @@ DictionaryBST.o: DictionaryBST.h
 
 DictionaryHashtable.o: DictionaryHashtable.h
 
-util.o: util.h
+#util.io: util.h
 
 clean:
 	rm -f test *.o core* *~
