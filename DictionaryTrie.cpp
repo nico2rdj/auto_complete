@@ -101,10 +101,68 @@ return false;
  * is a word (and is among the num_completions most frequent completions
  * of the prefix)
  */
+
 std::vector<std::string> DictionaryTrie::predictCompletions(std::string prefix, unsigned int num_completions)
 {
   std::vector<std::string> words;
+
+  int size_word = prefix.length();
+  trieNode** currentList = root;
+  
+  trieNode* currentNode;
+
+  for( int i = 0; i < size_word; i++){
+    char symbol = prefix[i];
+    int index = 26;
+    if (symbol != ' ')
+        index = symbol % (SIZE - 1);
+
+    if(currentList[index] == NULL){
+        return words;
+    } else {
+         currentNode = currentList[index];
+
+        if (i == size_word - 1) {
+            break;
+        }
+    }
+    currentList = currentNode->nextList;
+  }
+                      
+
+
+  pqtype *tmpWords = new pqtype();
+
+  std::string empty("");
+  currentNode->recursiveCompletions(tmpWords, empty );
+
+  for(unsigned int i = 0 ;i < num_completions && !tmpWords->empty(); i++){
+      std::tuple<std::string, unsigned int> word= tmpWords->top();
+      string newword = prefix + std::get<0>(word);
+      words.push_back(newword);
+      tmpWords->pop();
+  }
+
   return words;
+}
+
+void trieNode::recursiveCompletions(pqtype *tmpWords, std::string word) {
+    if( this->nextList == NULL)
+           return;
+
+    for( int i = 0; i < SIZE; i++){
+       if(this->nextList[i] != NULL){
+            if(this->nextList[i]->flag == true){
+                std::string end(word);
+                end += this->nextList[i]->symbol;
+                tmpWords->push(std::make_tuple(end, this->nextList[i]->freq));
+            }
+
+            this->nextList[i]->recursiveCompletions(tmpWords, word + this->nextList[i]->symbol);
+
+
+       }
+    }
 }
  
 /* Destructor */

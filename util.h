@@ -8,6 +8,8 @@
 #include <iostream>
 
 using std::istream;
+using std::vector;
+using std::string;
 
 class Timer{
 private:
@@ -63,6 +65,8 @@ public:
      * Load num_words from words stream into the dictionary
      */
     void static load_dict(DictionaryTrie& dict, istream& words, unsigned int num_words);
+
+    void static load_dict(vector<string>& dict, istream& words, unsigned int num_words);
 
 
 };

@@ -10,6 +10,8 @@
 
 #include <vector>
 #include <string>
+#include <tuple>
+#include <queue>
 
 /**
  *  The class for a dictionary ADT, implemented as a trie
@@ -17,6 +19,16 @@
  *  or a ternary search trie, but you must use one or the other.
  *
  */
+
+class Compare {
+    public:
+        bool operator() (std::tuple<std::string, unsigned int> left,  std::tuple<std::string, unsigned int> right) {
+            return std::get<1>(left) < std::get<1>(right);            
+        }
+};
+  typedef std::priority_queue<std::tuple<std::string, unsigned int>,
+                      std::vector<std::tuple<std::string, unsigned int>>,
+                      Compare> pqtype; 
 
 class trieNode
 {
@@ -26,6 +38,8 @@ public:
   bool flag;
   trieNode** nextList;
   unsigned int freq;
+  void recursiveCompletions(pqtype *tmpWords, std::string word); 
+
 };
 
 

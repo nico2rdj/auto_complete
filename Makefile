@@ -10,7 +10,7 @@ test: util.o DictionaryTrie.o DictionaryBST.o DictionaryHashtable.o
 
 benchdict: util.o DictionaryTrie.o DictionaryBST.o DictionaryHashtable.o
 
-benchhash: util.o DictionaryTrie.o DictionaryBST.o DictionaryHashtable.o
+benchhash: util.o DictionaryTrie.o DictionaryBST.o DictionaryHashtable.o benchhash.o
 
 DictionaryTrie.o: DictionaryTrie.h
 
