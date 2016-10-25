@@ -108,8 +108,13 @@ std::vector<std::string> DictionaryTrie::predictCompletions(std::string prefix, 
 
   int size_word = prefix.length();
   trieNode** currentList = root;
+  bool add_word = false;
   
   trieNode* currentNode;
+
+  if( this->find(prefix) == true){
+       
+  }
 
   for( int i = 0; i < size_word; i++){
     char symbol = prefix[i];
@@ -123,6 +128,9 @@ std::vector<std::string> DictionaryTrie::predictCompletions(std::string prefix, 
          currentNode = currentList[index];
 
         if (i == size_word - 1) {
+            if(currentNode->flag == true) {
+                add_word = true;
+            }
             break;
         }
     }
@@ -133,20 +141,22 @@ std::vector<std::string> DictionaryTrie::predictCompletions(std::string prefix, 
 
   pqtype *tmpWords = new pqtype();
 
+  if (add_word == true) {
+      tmpWords->push(std::make_tuple(prefix, currentNode->freq));    
+  }
   std::string empty("");
-  currentNode->recursiveCompletions(tmpWords, empty );
+  currentNode->recursiveCompletions(tmpWords, empty, prefix );
 
   for(unsigned int i = 0 ;i < num_completions && !tmpWords->empty(); i++){
       std::tuple<std::string, unsigned int> word= tmpWords->top();
-      string newword = prefix + std::get<0>(word);
-      words.push_back(newword);
+      words.push_back(std::get<0>(word));
       tmpWords->pop();
   }
 
   return words;
 }
 
-void trieNode::recursiveCompletions(pqtype *tmpWords, std::string word) {
+void trieNode::recursiveCompletions(pqtype *tmpWords, std::string word, std::string prefix) {
     if( this->nextList == NULL)
            return;
 
@@ -155,10 +165,10 @@ void trieNode::recursiveCompletions(pqtype *tmpWords, std::string word) {
             if(this->nextList[i]->flag == true){
                 std::string end(word);
                 end += this->nextList[i]->symbol;
-                tmpWords->push(std::make_tuple(end, this->nextList[i]->freq));
+                tmpWords->push(std::make_tuple(prefix + end, this->nextList[i]->freq));
             }
 
-            this->nextList[i]->recursiveCompletions(tmpWords, word + this->nextList[i]->symbol);
+            this->nextList[i]->recursiveCompletions(tmpWords, word + this->nextList[i]->symbol, prefix);
 
 
        }
@@ -167,10 +177,20 @@ void trieNode::recursiveCompletions(pqtype *tmpWords, std::string word) {
  
 /* Destructor */
 void deleteAll(trieNode ** ptr){
+    for( int i = 0; i < SIZE; i++){
+       if( (ptr[i]) ){
+            deleteAll((ptr[i])->nextList);
+            delete(ptr[i]->nextList);            
+            delete(ptr[i]);
+
+                }
+   
+    }
+   // if( ptr != NULL)
+       // delete(ptr);
     }
 
 DictionaryTrie::~DictionaryTrie(){
 deleteAll(root);
-
-delete root;
+delete(root);
 }

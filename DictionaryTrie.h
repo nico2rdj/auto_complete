@@ -38,7 +38,7 @@ public:
   bool flag;
   trieNode** nextList;
   unsigned int freq;
-  void recursiveCompletions(pqtype *tmpWords, std::string word); 
+  void recursiveCompletions(pqtype *tmpWords, std::string word, std::string prefix); 
 
 };
 
