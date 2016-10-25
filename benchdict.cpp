@@ -31,8 +31,7 @@ int main( int argc, char** argv){
     ifstream dict4 (dictfile);
 
     const string print_array[] = {"DictionaryTrie", "DictionaryBST", "DictionaryHashtable"};
-   // int t_bst, t_ht, tt;
-   //
+   
     for (int i = 0; i < 3; i++) {
         cout << print_array[i] << endl;
         ifstream dict(dictfile);
@@ -47,7 +46,7 @@ int main( int argc, char** argv){
             dict1.clear();                 
             dict1.seekg(0, std::ios::beg); 
             
-
+            // choosing the type of Trie
             switch (i) {
                 case 0:
                     Utils::load_dict(dt,dict1, min_size+j*step_size);
@@ -65,7 +64,8 @@ int main( int argc, char** argv){
             Utils::load_dict(words, dict1, 100);
             Timer t1;
             long long tot1 = 0;
-
+            
+            // computing the average time of each type of Trie
             for(int k = 0; k < MANY_TIMES; k++) {
                  t1.begin_timer(); 
                  for(it = words.begin(); it != words.end(); ++it){

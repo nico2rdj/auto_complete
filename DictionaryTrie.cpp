@@ -155,7 +155,7 @@ std::vector<std::string> DictionaryTrie::predictCompletions(std::string prefix, 
 
   return words;
 }
-
+/* add all word possibilities in the priority queue given in argument */
 void trieNode::recursiveCompletions(pqtype *tmpWords, std::string word, std::string prefix) {
     if( this->nextList == NULL)
            return;
@@ -186,8 +186,7 @@ void deleteAll(trieNode ** ptr){
                 }
    
     }
-   // if( ptr != NULL)
-       // delete(ptr);
+  
     }
 
 DictionaryTrie::~DictionaryTrie(){

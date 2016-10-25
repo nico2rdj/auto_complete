@@ -9,6 +9,7 @@
 #include "DictionaryHashtable.h"
 using namespace std;
 
+// from stackflow
 unsigned int hashFunction1 (string word, int tableSize)   
 
 {       unsigned int sum = 0;
@@ -17,17 +18,7 @@ unsigned int hashFunction1 (string word, int tableSize)
         return  sum % tableSize; 
 }
 
-/*unsigned long hashFunction2 (unsigned char *str) // http://www.cse.yorku.ca/~oz/hash.html
-    {
-        unsigned long hash = 5381;
-        int c;
-
-        while ((c = *str++))
-            hash = ((hash << 5) + hash) + c;  hash * 33 + c 
-
-        return hash;
-    }
-*/
+// from stackflow
 int hashFunction2 (string word, int tableSize)
 {
    int seed = 131; 
@@ -39,6 +30,7 @@ int hashFunction2 (string word, int tableSize)
    return hash % tableSize;
 }
 
+// max function of an array
 int funMax (int tab[], int size){
     
     int max = tab[0];
@@ -74,7 +66,7 @@ int main(int argc, char** argv){
     int number_hit[num_words*2] = {0};
     int number_hit1[num_words*2] = {0};
 
-    
+    // computing number of hits in an array 
     for(it = words.begin(); it != words.end(); ++it){
         int index = hashFunction1(*it, num_words*2);
         number_hit[index]++;
@@ -91,7 +83,8 @@ int main(int argc, char** argv){
     
     int tabMax[max +1] = {0};
     int tabMax1[max1 + 1] = {0};
-
+   
+    // computing total number of hit that receive a slot
     for( int i = 0 ; i < num_words*2; i++){
         tabMax[number_hit[i]] += 1;
         tabMax1[number_hit1[i]] += 1;
@@ -104,7 +97,8 @@ int main(int argc, char** argv){
      for( int i = 0; i < max + 1; i++){
         cout << i << "     " << tabMax[i] << endl;
      }
-
+        
+     //computing the average nulber of step
      double average = 0;
      for( int i = 1; i < max+1; i++){
          int sum = 0;
